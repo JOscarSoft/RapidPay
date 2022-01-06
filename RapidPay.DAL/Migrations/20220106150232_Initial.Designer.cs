@@ -10,8 +10,8 @@ using RapidPay.DAL;
 namespace RapidPay.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220106042737_Modifications")]
-    partial class Modifications
+    [Migration("20220106150232_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,13 +35,17 @@ namespace RapidPay.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CardHolderName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<long>("CardNumber")
                         .HasColumnType("bigint");
 
                     b.Property<string>("ExpirationDate")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.Property<decimal>("LimitAmount")
                         .HasColumnType("decimal(18,2)");
@@ -62,10 +66,14 @@ namespace RapidPay.DAL.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Commerce")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -99,6 +107,14 @@ namespace RapidPay.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentFees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FeePrice = 3.5m,
+                            UpdateTime = new DateTime(2022, 1, 6, 10, 2, 31, 614, DateTimeKind.Local).AddTicks(4713)
+                        });
                 });
 
             modelBuilder.Entity("RapidPay.DAL.User", b =>
@@ -110,15 +126,25 @@ namespace RapidPay.DAL.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Password = "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=",
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("RapidPay.DAL.Payment", b =>

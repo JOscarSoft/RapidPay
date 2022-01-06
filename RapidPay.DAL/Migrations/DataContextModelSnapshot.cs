@@ -33,13 +33,17 @@ namespace RapidPay.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CardHolderName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<long>("CardNumber")
                         .HasColumnType("bigint");
 
                     b.Property<string>("ExpirationDate")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.Property<decimal>("LimitAmount")
                         .HasColumnType("decimal(18,2)");
@@ -60,10 +64,14 @@ namespace RapidPay.DAL.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Commerce")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -103,7 +111,7 @@ namespace RapidPay.DAL.Migrations
                         {
                             Id = 1,
                             FeePrice = 3.5m,
-                            UpdateTime = new DateTime(2022, 1, 6, 8, 45, 52, 679, DateTimeKind.Local).AddTicks(3572)
+                            UpdateTime = new DateTime(2022, 1, 6, 10, 2, 31, 614, DateTimeKind.Local).AddTicks(4713)
                         });
                 });
 
@@ -116,11 +124,13 @@ namespace RapidPay.DAL.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 

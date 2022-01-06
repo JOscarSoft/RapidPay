@@ -22,7 +22,7 @@ namespace RapidPay.DL.Services
                 if(DateTime.Now.Subtract(fee.UpdateTime).TotalMinutes >= 60)
                 {
                     var random = new Random();
-                    fee.FeePrice *= Convert.ToDecimal(random.NextDouble() * 2);
+                    fee.FeePrice *= Math.Round(Convert.ToDecimal(random.NextDouble() * 2), 2);
                     fee.UpdateTime = DateTime.Now;
 
                     _paymentFeeRepository.Update(fee);
