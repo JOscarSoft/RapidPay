@@ -19,10 +19,17 @@ namespace RapidPay.DL.Services
             var fee = await _paymentFeeRepository.GetPaymentFee();
             if (fee != null)
             {
-                if(DateTime.Now.Subtract(fee.UpdateTime).TotalMinutes >= 60)
+                int updateTimeHours = (int)(DateTime.Now.Subtract(fee.UpdateTime).TotalMinutes / 60);
+                if (updateTimeHours >= 1)
                 {
                     var random = new Random();
-                    fee.FeePrice *= Math.Round(Convert.ToDecimal(random.NextDouble() * 2), 2);
+
+                    //Recalculate the Fee for every hour that passed
+                    for (int i = 0; i < updateTimeHours; i++)
+                    {
+                        fee.FeePrice *= Math.Round(Convert.ToDecimal(random.NextDouble() * 2), 2);
+                    }
+
                     fee.UpdateTime = DateTime.Now;
 
                     _paymentFeeRepository.Update(fee);
